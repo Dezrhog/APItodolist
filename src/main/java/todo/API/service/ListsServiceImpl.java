@@ -3,9 +3,12 @@ package todo.API.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import todo.API.Entityes.ListsEntity;
 import todo.API.repository.ListsRepo;
+
+import java.util.UUID;
 
 @Service
 public class ListsServiceImpl implements ListsService{
@@ -23,12 +26,12 @@ public class ListsServiceImpl implements ListsService{
     }
 
     @Override
-    public ListsEntity read(long id) {
+    public ListsEntity read(UUID id) {
         return listsRepo.getOne(id);
     }
 
     @Override
-    public boolean update(ListsEntity listsEntity, long id) {
+    public boolean update(ListsEntity listsEntity, UUID id) {
         if (listsRepo.existsById(id)) {
             listsEntity.setId(id);
             listsRepo.save(listsEntity);
@@ -38,7 +41,7 @@ public class ListsServiceImpl implements ListsService{
     }
 
     @Override
-    public boolean delete(long id) {
+    public boolean delete(UUID id) {
         if (listsRepo.existsById(id)) {
             listsRepo.deleteById(id);
             return true;
