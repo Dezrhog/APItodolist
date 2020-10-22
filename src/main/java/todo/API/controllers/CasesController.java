@@ -9,9 +9,9 @@ import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import todo.API.Entityes.CasesEntity;
-import todo.API.Entityes.ListsEntity;
-import todo.API.service.CasesServiceImpl;
+import todo.API.entities.CasesEntity;
+import todo.API.entities.ListsEntity;
+import todo.API.serviceimpl.CasesServiceImpl;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -71,7 +71,7 @@ public class CasesController {
                                     @RequestBody CasesEntity casesEntity) {
         casesEntity.setCaseChangeDate(LocalDateTime.now());
 
-        final boolean updated = casesService.update(casesEntity, id);       // Обновляем объект в БД
+        final boolean updated = casesService.update(casesEntity, id);
 
         return updated
                 ? new ResponseEntity<>(HttpStatus.OK)

@@ -3,8 +3,8 @@ package todo.API.repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import todo.API.Entityes.CasesEntity;
-import todo.API.Entityes.ListsEntity;
+import todo.API.entities.CasesEntity;
+import todo.API.entities.ListsEntity;
 
 import javax.transaction.Transactional;
 import java.util.UUID;

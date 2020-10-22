@@ -9,8 +9,8 @@ import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import todo.API.Entityes.ListsEntity;
-import todo.API.service.ListsServiceImpl;
+import todo.API.entities.ListsEntity;
+import todo.API.serviceimpl.ListsServiceImpl;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -27,7 +27,7 @@ public class ListsController {
         this.listsServiceImpl = listsServiceImpl;
     }
 
-    @PostMapping   // Создание нового списка дел
+    @PostMapping
     public ResponseEntity<?> create(@RequestParam(name = "title") String title) {
         ListsEntity listsEntity = new ListsEntity();
         listsEntity.setTitle(title);
@@ -70,8 +70,8 @@ public class ListsController {
     ) {
         ListsEntity listsEntity = listsServiceImpl.read(id);
         listsEntity.setTitle(title);
-        listsEntity.setChangeDate(LocalDateTime.now());                             // Обновляем дату изменения
-        final boolean updated = listsServiceImpl.update(listsEntity, id);       // Обновляем объект в БД
+        listsEntity.setChangeDate(LocalDateTime.now());
+        final boolean updated = listsServiceImpl.update(listsEntity, id);
 
         return updated
                 ? new ResponseEntity<>(HttpStatus.OK)

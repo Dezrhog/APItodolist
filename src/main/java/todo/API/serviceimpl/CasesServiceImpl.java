@@ -1,17 +1,18 @@
-package todo.API.service;
+package todo.API.serviceimpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import todo.API.Entityes.CasesEntity;
-import todo.API.Entityes.ListsEntity;
+import todo.API.entities.CasesEntity;
+import todo.API.entities.ListsEntity;
 import todo.API.repository.CasesRepo;
+import todo.API.service.CasesService;
 
 import java.util.UUID;
 
 @Service
-public class CasesServiceImpl implements CasesService{
+public class CasesServiceImpl implements CasesService {
 
     @Autowired
     private CasesRepo casesRepo;

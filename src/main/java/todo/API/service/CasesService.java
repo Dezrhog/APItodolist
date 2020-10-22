@@ -2,8 +2,8 @@ package todo.API.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import todo.API.Entityes.CasesEntity;
-import todo.API.Entityes.ListsEntity;
+import todo.API.entities.CasesEntity;
+import todo.API.entities.ListsEntity;
 
 import java.util.UUID;
 
