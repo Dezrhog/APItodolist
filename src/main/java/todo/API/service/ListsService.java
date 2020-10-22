@@ -14,6 +14,9 @@ public interface ListsService {
     // Возвращает список всех списков
     Page<ListsEntity> readAll(Pageable pageable);
 
+    // Возвращает списки по заголовку или его части
+    Page<ListsEntity> readByTitle(Pageable pageable, String title);
+
     // Возвращает список по его ID
     ListsEntity read(UUID id);
 

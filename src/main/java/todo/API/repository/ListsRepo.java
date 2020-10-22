@@ -13,4 +13,5 @@ public interface ListsRepo extends JpaRepository<ListsEntity, UUID> {
 
     Page<ListsEntity> findAll(Pageable pageable);
 
+    Page<ListsEntity> findByTitleContaining(Pageable pageable, String title);
 }

@@ -39,7 +39,7 @@ public class CasesEntity {
     @Column(name = "urgency", nullable = false)
     private short urgency;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "lists_id", referencedColumnName = "id")
     private ListsEntity list;
 }

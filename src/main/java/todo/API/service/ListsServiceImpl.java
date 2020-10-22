@@ -3,9 +3,9 @@ package todo.API.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import todo.API.Entityes.ListsEntity;
+import todo.API.repository.CasesRepo;
 import todo.API.repository.ListsRepo;
 
 import java.util.UUID;
@@ -15,22 +15,30 @@ public class ListsServiceImpl implements ListsService{
     @Autowired
     private ListsRepo listsRepo;
 
-    @Override
+    @Autowired
+    private CasesRepo casesRepo;
+
+    @Override   // Создаёт список
     public void create(ListsEntity listsEntity) {
         listsRepo.save(listsEntity);
     }
 
-    @Override
+    @Override   // Возвращает все списки
     public Page<ListsEntity> readAll(Pageable pageable) {
         return listsRepo.findAll(pageable);
     }
 
-    @Override
+    @Override   // Возвращает списки по заголовку или его части
+    public Page<ListsEntity> readByTitle(Pageable pageable, String title) {
+        return listsRepo.findByTitleContaining(pageable, title);
+    }
+
+    @Override   // Возвращает один список по его ID
     public ListsEntity read(UUID id) {
         return listsRepo.getOne(id);
     }
 
-    @Override
+    @Override   // Обновляет список
     public boolean update(ListsEntity listsEntity, UUID id) {
         if (listsRepo.existsById(id)) {
             listsEntity.setId(id);
@@ -40,10 +48,10 @@ public class ListsServiceImpl implements ListsService{
         return false;
     }
 
-    @Override
+    @Override   // Удаляет список
     public boolean delete(UUID id) {
         if (listsRepo.existsById(id)) {
-            listsRepo.deleteById(id);
+            casesRepo.deleteAllByList_Id(id);
             return true;
         }
         return false;

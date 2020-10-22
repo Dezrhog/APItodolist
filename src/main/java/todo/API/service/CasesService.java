@@ -3,24 +3,26 @@ package todo.API.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import todo.API.Entityes.CasesEntity;
+import todo.API.Entityes.ListsEntity;
 
 import java.util.UUID;
 
 public interface CasesService {
-    // Создаёт новый список
+    // Создаёт новое дело
     void create(CasesEntity casesEntity);
 
-    // Возвращает список всех списков
-    Page<CasesEntity> readAll(Pageable pageable);
-
-    // Возвращает список по его ID
+    // Возвращает дело по его ID
     CasesEntity read(UUID id);
 
-    // Обновляет список по заданному ID
+    // Обновляет дело по заданному ID
     // true - данные обновлены, иначе false
     boolean update(CasesEntity listsEntity, UUID id);
 
-    //Удаляет список по заданному ID
-    // true - список удалён, иначе false
+    //Удаляет дело по заданному ID
+    // true - дело удалено, иначе false
     boolean delete(UUID id);
+
+    Page<CasesEntity> readByListAndName(ListsEntity listsEntity, Pageable pageable, String name);
+
+    Page<CasesEntity> readByList(ListsEntity listsEntity, Pageable pageable);
 }
