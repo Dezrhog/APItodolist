@@ -14,6 +14,8 @@ public interface CasesService {
     // Возвращает дело по его ID
     CasesEntity read(UUID id);
 
+    CasesEntity readByListAndId(ListsEntity listsEntity, UUID id);
+
     // Обновляет дело по заданному ID
     // true - данные обновлены, иначе false
     boolean update(CasesEntity listsEntity, UUID id);
@@ -25,4 +27,8 @@ public interface CasesService {
     Page<CasesEntity> readByListAndName(ListsEntity listsEntity, Pageable pageable, String name);
 
     Page<CasesEntity> readByList(ListsEntity listsEntity, Pageable pageable);
+
+    boolean readByName(String name);
+
+    boolean readById(UUID id);
 }

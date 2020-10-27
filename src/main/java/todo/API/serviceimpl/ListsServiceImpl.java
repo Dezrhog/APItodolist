@@ -39,6 +39,11 @@ public class ListsServiceImpl implements ListsService {
         return listsRepo.getOne(id);
     }
 
+    @Override
+    public ListsEntity readByTitle(String title) {
+        return listsRepo.findByTitle(title);
+    }
+
     @Override   // Обновляет список
     public boolean update(ListsEntity listsEntity, UUID id) {
         if (listsRepo.existsById(id)) {
@@ -53,6 +58,7 @@ public class ListsServiceImpl implements ListsService {
     public boolean delete(UUID id) {
         if (listsRepo.existsById(id)) {
             casesRepo.deleteAllByList_Id(id);
+            listsRepo.deleteById(id);
             return true;
         }
         return false;

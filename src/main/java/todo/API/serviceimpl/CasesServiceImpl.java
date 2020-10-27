@@ -23,11 +23,16 @@ public class CasesServiceImpl implements CasesService {
     @Override   // Возвращает дело по его ID
     public CasesEntity read(UUID id) { return casesRepo.getOne(id); };
 
-                // Обновляет дело по заданному ID
+    @Override
+    public CasesEntity readByListAndId(ListsEntity listsEntity, UUID id) {
+        return casesRepo.findByListAndId(listsEntity, id);
+    }
+
+    // Обновляет дело по заданному ID
     @Override   // true - данные обновлены, иначе false
     public boolean update(CasesEntity casesEntity, UUID id) {
         if (casesRepo.existsById(id)) {
-            casesEntity.setId(id);
+            casesEntity.setComplete(true);
             casesRepo.save(casesEntity);
             return true;
         }
@@ -57,5 +62,15 @@ public class CasesServiceImpl implements CasesService {
         if(listsEntity != null)
             return casesRepo.findByList(listsEntity, pageable);
         return null;
+    }
+
+    @Override
+    public boolean readByName(String name) {
+        return casesRepo.findByName(name) != null;
+    }
+
+    @Override
+    public boolean readById(UUID id) {
+        return casesRepo.findById(id) != null;
     }
 }

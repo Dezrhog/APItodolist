@@ -17,6 +17,8 @@ public interface ListsService {
     // Возвращает списки по заголовку или его части
     Page<ListsEntity> readByTitle(Pageable pageable, String title);
 
+    ListsEntity readByTitle(String title);
+
     // Возвращает список по его ID
     ListsEntity read(UUID id);
 
