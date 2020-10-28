@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"todo.API"},{"l":"todo.API.controllers"},{"l":"todo.API.entities"},{"l":"todo.API.repository"},{"l":"todo.API.service"},{"l":"todo.API.serviceimpl"},{"l":"todo.API.utils"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"todo.API"},{"l":"todo.API.controllers"},{"l":"todo.API.entities"},{"l":"todo.API.exceptions"},{"l":"todo.API.repository"},{"l":"todo.API.service"},{"l":"todo.API.service.impl"},{"l":"todo.API.utils"}];updateSearchResults();

@@ -11,15 +11,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import todo.API.entities.ListsEntity;
-import todo.API.serviceimpl.ListsServiceImpl;
-import todo.API.utils.BigLengthException;
-import todo.API.utils.ConflictException;
+import todo.API.service.impl.ListsServiceImpl;
+import todo.API.exceptions.BigLengthException;
+import todo.API.exceptions.ConflictException;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
-@Api(description = "Operations with lists")
+/** Контроллер операций над списками */
+@Api(description = "Операции над списками")
 @RestController
 @RequestMapping("lists")
 public class ListsController {
@@ -31,12 +32,15 @@ public class ListsController {
         this.listsServiceImpl = listsServiceImpl;
     }
 
-    @ApiOperation(value = "Create a list", response = ResponseEntity.class)
+
+    /** Добавление нового списка дел
+     * На вход подаётся только заголовок */
+    @ApiOperation(value = "Создать лист", response = ResponseEntity.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "CREATED"),
             @ApiResponse(code = 409, message = "CONFLICT")
     })
-    @PostMapping(produces = "application/json")     // Добавление нового списка дел
+    @PostMapping(produces = "application/json")
     public ResponseEntity<?> create(@RequestParam(name = "title") String title) throws BigLengthException, ConflictException {
         if(title.length() > 250) {
             throw new BigLengthException();
@@ -52,9 +56,10 @@ public class ListsController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @ApiOperation(value = "Output to-do lists with pagination and sorting")
+    /** Вывод списков дел с пагинацией и сортировкой */
+    @ApiOperation(value = "Вывод списков дел с пагинацией и сортировкой")
     @ApiResponse(code = 404, message = "NOT FOUND")
-    @GetMapping(produces = "application/json")      // Вывод списка списков дел с пагинацией и сортировкой
+    @GetMapping(produces = "application/json")
     public ResponseEntity<?> read(
             @RequestParam(name = "page") Optional<Integer> page,
             @RequestParam(name = "title", required = false) String title,
@@ -72,9 +77,10 @@ public class ListsController {
                 : new ResponseEntity<String>("Lists not found",HttpStatus.NOT_FOUND);
     }
 
-    @ApiOperation(value = "Find list by ID")
+    /** Поиск списка по его ID */
+    @ApiOperation(value = "Поиск списка по его ID")
     @ApiResponse(code = 404, message = "NOT FOUND")
-    @GetMapping(value = "{id}", produces = "application/json") // Поиск списка по ID
+    @GetMapping(value = "{id}", produces = "application/json")
     public ResponseEntity<?> read(@PathVariable(name = "id") UUID id) {
         ListsEntity listsEntity = listsServiceImpl.read(id);
 
@@ -83,9 +89,10 @@ public class ListsController {
                 : new ResponseEntity<String>("Lists not found", HttpStatus.NOT_FOUND);
     }
 
-    @ApiOperation(value = "Update the list title by its ID")
+    /** Изменение заголовка списка по его ID */
+    @ApiOperation(value = "Изменение заголовка списка по его ID")
     @ApiResponse(code = 304, message = "NOT MODIFIED")
-    @PutMapping(value = "{id}", produces = "application/json") // Инзменение заголовка (названия) списка по его ID
+    @PutMapping(value = "{id}", produces = "application/json")
     public ResponseEntity<?> update(@PathVariable(name = "id") UUID id,
                                     @RequestParam String title
     ) throws BigLengthException {
@@ -102,9 +109,10 @@ public class ListsController {
                 : new ResponseEntity<String>("Not modified", HttpStatus.NOT_MODIFIED);
     }
 
-    @ApiOperation(value = "Delete the list by ID")
+    /** Удаление списка по его ID */
+    @ApiOperation(value = "Удаление списка по его ID")
     @ApiResponse(code = 404, message = "NOT FOUND")
-    @DeleteMapping(value = "{id}", produces = "application/json")  // Удаление списка по его ID
+    @DeleteMapping(value = "{id}", produces = "application/json")
     public ResponseEntity<?> delete(@PathVariable(name = "id", required = true) UUID id) {
         final boolean deleted = listsServiceImpl.delete(id);
 

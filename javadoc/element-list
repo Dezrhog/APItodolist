@@ -1,7 +1,8 @@
 todo.API
 todo.API.controllers
 todo.API.entities
+todo.API.exceptions
 todo.API.repository
 todo.API.service
-todo.API.serviceimpl
+todo.API.service.impl
 todo.API.utils

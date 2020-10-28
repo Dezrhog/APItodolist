@@ -14,16 +14,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import todo.API.entities.CasesEntity;
 import todo.API.entities.ListsEntity;
-import todo.API.serviceimpl.CasesServiceImpl;
-import todo.API.utils.BigLengthException;
-import todo.API.utils.ConflictException;
-import todo.API.utils.NotFoundException;
+import todo.API.service.impl.CasesServiceImpl;
+import todo.API.exceptions.BigLengthException;
+import todo.API.exceptions.ConflictException;
+import todo.API.exceptions.NotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
-@Api(description = "Operations with cases")
+/** Контроллер операций над делами
+ * Операции производятся только при условии ввода в путь List ID*/
+@Api(description = "Операции над делами")
 @RestController
 @RequestMapping("lists/{id}/cases")
 public class CasesController {
@@ -33,9 +35,10 @@ public class CasesController {
     @Autowired
     private CasesController(CasesServiceImpl casesService) { this.casesService = casesService; }
 
-    @ApiOperation(value = "Output to-do cases with pagination and sorting")
+    /** Вывод всех дел в списке с пагинацией и сортировкой */
+    @ApiOperation(value = "Возвращает список всех дел с пагинацией и сортировкой")
     @ApiResponse(code = 404, message = "NOT FOUND")
-    @GetMapping(produces = "application/json")   // Обработка GET на адрес /lists с пагинацией и сортировкой
+    @GetMapping(produces = "application/json")
     public ResponseEntity<Page<CasesEntity>> read(
             @PathVariable("id") ListsEntity listsEntity,
             @RequestParam(name = "page") Optional<Integer> page,
@@ -55,6 +58,7 @@ public class CasesController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    /** Поиск дела в списке по его ID */
     @ApiOperation(value = "Find case by ID")
     @ApiResponse(code = 404, message = "NOT FOUND")
     @GetMapping(value = "{caseId}", produces = "application/json")
@@ -67,7 +71,9 @@ public class CasesController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @ApiOperation(value = "Create a case")
+    /** Создание нового дела
+     * На вход получает схему дела */
+    @ApiOperation(value = "Создание дела")
     @ApiResponse(code = 201, message = "CREATED")
     @PostMapping(produces = "application/json")
     public ResponseEntity<?> create(@PathVariable("id") ListsEntity listsEntity,
@@ -88,7 +94,9 @@ public class CasesController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @ApiOperation(value = "Update the case by its ID")
+    /** Обновляет дело по его ID
+     * Получает на вход схему дела */
+    @ApiOperation(value = "Обновляет дело по его ID")
     @ApiResponse(code = 304, message = "NOT MODIFIED")
     @PutMapping(value = "{caseId}", produces = "application/json")
     public ResponseEntity<?> update(@PathVariable("caseId") UUID id,
@@ -101,7 +109,8 @@ public class CasesController {
                 : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
-    @ApiOperation(value = "Update the completeness of the case")
+    /** Обновляет завершённость дела по его ID */
+    @ApiOperation(value = "Обновляет завершённость дела по его ID")
     @PutMapping(value = "/markDone/{caseId}", produces = "application/json")
     public ResponseEntity<?> markDone(@PathVariable("caseId") UUID id) throws NotFoundException{
 
@@ -114,7 +123,8 @@ public class CasesController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Delete case by its ID")
+    /** Удаляет дело по его ID */
+    @ApiOperation(value = "Удаляет дело по его ID")
     @ApiResponse(code = 304, message = "NOT MODIFIED")
     @DeleteMapping(value = "{caseId}", produces = "application/json")
     public ResponseEntity<?> delete(@PathVariable(name = "caseId") UUID id) {

@@ -1,3 +1,16 @@
+buildscript {
+	ext {
+		springBootVersion = '2.3.4.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath(
+				"org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
 plugins {
 	id 'org.springframework.boot' version '2.3.4.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
@@ -18,6 +31,10 @@ repositories {
 	mavenCentral()
 }
 
+
+
+apply plugin: 'org.springframework.boot'
+
 jar {
 	manifest {
 		attributes 'Main-Class' : 'ApiApplication'
@@ -27,6 +44,10 @@ jar {
 			it.isDirectory()? it: zipTree(it)
 		}
 	}
+}
+
+bootJar {
+	mainClassName = 'todo.API.ApiApplication'
 }
 
 dependencies {
@@ -41,8 +62,6 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
 	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
-
-
 
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'org.postgresql:postgresql'
